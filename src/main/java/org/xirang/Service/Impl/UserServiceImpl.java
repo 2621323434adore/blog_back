@@ -43,4 +43,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, XiRangUser> impleme
             return null;
         }
     }
+    public boolean updateUser(XiRangUser xiRangUser){
+        return save(xiRangUser);
+    }
+    public int deleteUser(Long userId){
+        return userMapper.deleteById(userId);
+    }
+    public boolean findUserByUsername(String username){
+       return userMapper.findUserByUsername(username);
+    }
+    public boolean findUserByEmail(String email){
+        return userMapper.findUserByEmail(email);
+    }
+    public boolean findUserByQQ(String qq){
+        return userMapper.findUserByQq(qq);
+    }
+
 }

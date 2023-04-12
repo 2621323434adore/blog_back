@@ -15,7 +15,11 @@ public class ResultObject extends HashMap<String,Object> {
 //       public static final int RequestNotSatisfiable = 417;
 
     public ResultObject setData(Object data) {
-        put("data",data);
+        if(data !=null){
+            put("data",data);
+        }else {
+            put("data","数据请求失败");
+        }
         return this;
     }
 

@@ -1,12 +1,19 @@
 package org.xirang;
 
+import cn.hutool.core.util.PageUtil;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.xirang.Entity.Article;
+import org.xirang.Service.Impl.ArticleServiceImpl;
 import org.xirang.Utils.PasswordUtil;
+
+import java.util.List;
 
 @SpringBootTest
 class XirangBlogApplicationTests {
-
+@Autowired
+    ArticleServiceImpl articleService;
     @Test
     void login() {
         System.out.println(PasswordUtil.encode("123456"));
@@ -16,5 +23,13 @@ class XirangBlogApplicationTests {
     void token() {
         System.out.println();
     }
-
+    @Test
+    void getArticleList() {
+        int articlesNumber = articleService.getArticlesNumber();
+        int totalPage = PageUtil.totalPage(articlesNumber, 10);
+        System.out.println("articlesNumber: "+articlesNumber+"totalPage :"+totalPage);
+        int[] startEnd1 = PageUtil.transToStartEnd(4, 10);
+       List<Article> articles =  articleService.getArticleList(startEnd1[1]);
+        System.out.println(articles);
+    }
 }

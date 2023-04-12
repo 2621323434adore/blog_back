@@ -7,13 +7,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_ID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName( "xirang_user")
-public class XiRangUser{
+public class XiRangUser implements Serializable {
     /*
 AUTO，配合数据库设置自增主键，可以实现主键的自动增长，类型为nmber；
 INPUT，由用户输入；

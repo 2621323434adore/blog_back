@@ -40,7 +40,7 @@ public class UserController {
         return SaResult.data(StpUtil.getTokenInfo()).set("UserInfo", login);
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ResultObject registerUser(@RequestParam String username,
                                      @RequestParam String password,
                                      @RequestParam String name,
@@ -55,12 +55,12 @@ public class UserController {
         if (StrUtil.isEmpty(username) && StrUtil.isEmpty(password) && StrUtil.isEmpty(email) && StrUtil.isEmpty(qq) && StrUtil.isEmpty(birth_date)) {
             object.setMsg("数据资料不完整，请检查表单后再试").setResultCode(ResultCode.WARNING);
             return object;
-        }else {
-            XiRangUser user = userServiceImpl.createUser(username,PasswordUtil.encode(password), name, email, qq, phone, gender, birth_date, user_date, label);
-            if(user == null) {
+        } else {
+            XiRangUser user = userServiceImpl.createUser(username, PasswordUtil.encode(password), name, email, qq, phone, gender, birth_date, user_date, label);
+            if (user == null) {
                 object.setMsg("注册失败，请重新尝试！").setResultCode(ResultCode.WARNING);
                 return object;
-            }else {
+            } else {
                 object.setMsg("注册成功，快去登录吧！").setResultCode(ResultCode.SUCCESS);
                 return object;
             }
@@ -68,7 +68,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/findUser", method = RequestMethod.POST)
-    public ResultObject Test(@RequestParam String username, @RequestParam Long id, @RequestParam String token, HttpServletResponse response) {
+    public ResultObject findUser(@RequestParam String username, @RequestParam Long id, @RequestParam String token, HttpServletResponse response) {
         ResultObject object = new ResultObject();
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST");
@@ -96,5 +96,40 @@ public class UserController {
             resultObject.setResultCode(ResultCode.NotFoundException).setMsg("注销失败！！");
         }
         return resultObject;
+    }
+
+    @RequestMapping("/verifyProp")
+    public ResultObject VerifyProp(@RequestParam String key, @RequestParam String value) {
+        ResultObject object = new ResultObject();
+        switch (key) {
+            case "username": {
+                boolean status = userServiceImpl.findUserByUsername(value);
+                if (status) {
+                    object.setResultCode(ResultCode.SUCCESS).setData("Y");
+                } else {
+                    object.setResultCode(ResultCode.SUCCESS).setData("N");
+                }
+                break;
+            }
+            case "email": {
+                boolean status = userServiceImpl.findUserByEmail(value);
+                if (status) {
+                    object.setResultCode(ResultCode.SUCCESS).setData("Y");
+                } else {
+                    object.setResultCode(ResultCode.SUCCESS).setData("N");
+                }
+                break;
+            }
+            case "qq": {
+                boolean status = userServiceImpl.findUserByQQ(value);
+                if (status) {
+                    object.setResultCode(ResultCode.SUCCESS).setData("Y");
+                } else {
+                    object.setResultCode(ResultCode.SUCCESS).setData("N");
+                }
+                break;
+            }
+        }
+        return object;
     }
 }
