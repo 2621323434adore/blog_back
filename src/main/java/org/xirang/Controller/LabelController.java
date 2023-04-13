@@ -5,9 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.xirang.Entity.Label;
-import org.xirang.Mapper.LabelMapper;
 import org.xirang.Service.Impl.LabelServiceImpl;
-import org.xirang.Service.LabelService;
 import org.xirang.Utils.ResultCode;
 import org.xirang.Utils.ResultObject;
 
@@ -18,6 +16,9 @@ public class LabelController {
     @Autowired
     LabelServiceImpl labelService;
 
+    /**
+    * 获取所有标签
+    * */
     @RequestMapping("/getLabels")
     public ResultObject getLabelList() {
         ResultObject object = new ResultObject();
@@ -26,6 +27,9 @@ public class LabelController {
         return object;
     }
 
+    /**
+     * 根据标签内容对标签进行检索
+     * */
     @RequestMapping("/searchLabel")
     public ResultObject searchLabel(@RequestParam String name) {
         ResultObject object = new ResultObject();
@@ -34,6 +38,9 @@ public class LabelController {
         return object;
     }
 
+    /**
+     * 创建新标签
+     **/
     @RequestMapping("/addLabel")
     public ResultObject addLabel(@RequestParam String name) {
         ResultObject object = new ResultObject();
@@ -47,6 +54,10 @@ public class LabelController {
         return object;
     }
 
+
+    /**
+     * 删除标签
+     * **/
     @RequestMapping("/deleteLabel")
     public ResultObject deleteLabel(@RequestParam int id) {
         ResultObject object = new ResultObject();

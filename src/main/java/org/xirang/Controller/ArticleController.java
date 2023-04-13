@@ -21,6 +21,10 @@ public class ArticleController {
     @Autowired
     ArticleServiceImpl articleService;
 
+
+    /**
+    * 分页查询文章列表
+    * */
     @CrossOrigin
     @RequestMapping(value = "/getArticleList", method = RequestMethod.GET)
     @ResponseBody
@@ -31,6 +35,9 @@ public class ArticleController {
         return result;
     }
 
+    /**
+     * 加载单个文章详细内容
+     * */
     @RequestMapping("/readArticle/{id}")
     public ResultObject readArticle(@PathVariable Long id) {
         ResultObject object = new ResultObject();
@@ -43,6 +50,10 @@ public class ArticleController {
         return object;
     }
 
+
+    /**
+    * 发布新文章
+    * */
     @RequestMapping("/sendArticle")
     public ResultObject sendArticle(@RequestParam("title") String title,
                                     @RequestParam("articleCover") String articleCover,
@@ -58,11 +69,14 @@ public class ArticleController {
         ResultObject resultObject = new ResultObject();
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String articleDate = format.format(date);
-       if(StpUtil.getLoginIdByToken(token) == id){
+        String articleDate = format.format(date);  //获取当前时间作为文章发布日期
+       if(StpUtil.getLoginIdByToken(token) == id){  //再次验证用户是否登录
            Article article = new Article(0L,title,articleCover,label,type,sketch,artId,artName,text,articleDate,0);
+           //根据用户上传的数据包装文章实体
            boolean save = articleService.SaveArticle(article);
+           //将文章进行保存
            if(save){
+               //验证文章是否发布
                resultObject.setResultCode(ResultCode.SUCCESS).setData("Y").setMsg("文章发布成功！正在等待审核...");
            }else {
                resultObject.setResultCode(ResultCode.FAILED).setData("N").setMsg("文章发布失败！请稍后重新尝试...");
@@ -70,6 +84,10 @@ public class ArticleController {
        }
         return resultObject;
     }
+
+    /**
+    * 更新文章数据
+    * */
     @RequestMapping("/updateArticle")
     public ResultObject updateArticle(
                                      @RequestParam("articleId") Long articleId,
@@ -101,7 +119,11 @@ public class ArticleController {
         }
         return object;
     }
-    @RequestMapping("/delete")
+
+    /**
+    * 根据文章id删除文章信息
+    * */
+    @RequestMapping("/deleteArticle")
     public ResultObject deleteArticle(@RequestParam Long id){
         ResultObject object = new ResultObject();
         int i = articleService.deleteArticle(id);
