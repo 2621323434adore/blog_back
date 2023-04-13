@@ -5,15 +5,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.xirang.Entity.Article;
+import org.xirang.Entity.UserVoComment;
 import org.xirang.Service.Impl.ArticleServiceImpl;
+import org.xirang.Service.Impl.UserVoCommentServiceImpl;
 import org.xirang.Utils.PasswordUtil;
-
 import java.util.List;
 
 @SpringBootTest
 class XirangBlogApplicationTests {
 @Autowired
     ArticleServiceImpl articleService;
+@Autowired
+UserVoCommentServiceImpl commentService;
     @Test
     void login() {
         System.out.println(PasswordUtil.encode("123456"));
@@ -32,4 +35,8 @@ class XirangBlogApplicationTests {
        List<Article> articles =  articleService.getArticleList(startEnd1[1]);
         System.out.println(articles);
     }
-}
+    @Test
+    public void getArticleComment(){
+        List<UserVoComment> comment = commentService.getArticleComments(30L);
+        System.out.println(comment);
+    }}
