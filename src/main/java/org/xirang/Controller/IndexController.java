@@ -1,6 +1,5 @@
 package org.xirang.Controller;
 
-
 import org.springframework.web.bind.annotation.*;
 import org.xirang.Utils.ResultCode;
 import org.xirang.Utils.ResultObject;
@@ -9,22 +8,12 @@ import org.xirang.Utils.ResultObject;
 public class IndexController {
 
     @CrossOrigin
-    @GetMapping("/get")
+    @GetMapping("/index")
     public ResultObject get(@RequestParam String sum){
        ResultObject resultObject =  new ResultObject();
        resultObject.setResultCode(ResultCode.SUCCESS);
        resultObject.setMsg("请求成功");
        resultObject.setData("ok");
       return resultObject;
-    }
-
-    @CrossOrigin
-    @PostMapping("/post")
-    public ResultObject post(@RequestParam String sum, @RequestParam String message){
-        ResultObject resultObject =  new ResultObject();
-        resultObject.setResultCode(ResultCode.SUCCESS);
-        resultObject.setMsg("请求成功");
-        resultObject.setData("ok");
-        return resultObject;
     }
 }

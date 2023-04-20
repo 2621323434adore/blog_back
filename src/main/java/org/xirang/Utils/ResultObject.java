@@ -14,6 +14,14 @@ public class ResultObject extends HashMap<String,Object> {
 //       public static final int NotUserAuth = 401;
 //       public static final int RequestNotSatisfiable = 417;
 
+    public ResultObject setData(String key ,Object data) {
+        if(data !=null){
+            put(key,data);
+        }else {
+            put(key,"数据请求失败");
+        }
+        return this;
+    }
     public ResultObject setData(Object data) {
         if(data !=null){
             put("data",data);
